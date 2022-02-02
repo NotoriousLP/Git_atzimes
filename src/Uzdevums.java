@@ -64,10 +64,24 @@ public class Uzdevums {
 		}
 		return semestraVertejums;
 	}
+	public static void izvadit(int[][] kriterijaVertejums, String[] studenti, int[] kriterijaSvars, double[] semestraVertejums,String[] kriteriji){
+		DecimalFormat df = new DecimalFormat("0.#");  
+		for(int i=0; i<studenti.length; i++) {	
+			for(int j=0; j<kriteriji.length; j++) {
+				System.out.println("Studenta "+studenti[i]+" vērtējums par kritēriju "+kriteriji[j]+" ir "+kriterijaVertejums[i][j]+", kura svars ir "+kriterijaSvars[j]);
+			}
+			System.out.println("Semestra vērtējums ir "+df.format(semestraVertejums[i])+"\n");
+		}
+	}
 	public static void main(String[] args) {
 		int studSk, kritSk,izvele;
+		String[] studenti = null;
+		String[] kriteriji = null;
+		int[] kriterijaSvars = null;
+		int[][] kriterijaVertejums = null;
+		double[] semestraVertejums = null;
 		do{
-			System.out.println("1-Cik studenti un cik kritēriji | 2-Studentu ievadīšana | 3-Kritēriju ievadīšana |  5 - Apturēt programmu");
+			System.out.println("1-Cik studenti un cik kritēriji un aprēķināšana | 2-Izvadīt |  3 - Apturēt programmu");
 			izvele = scan.nextInt();
 			switch(izvele){
 			case 1:
@@ -75,23 +89,30 @@ public class Uzdevums {
 					System.out.println("Cik studentiem aprēķināsi gala vērtējumu?");
 					studSk = scan.nextInt();
 				}while(studSk<1);
-				String[] studenti = new String[studSk];	
+				studenti = new String[studSk];	
 				ievadit(studenti);
 				do {
 					System.out.println("Kāds būs kritēriju skaits?");
 					kritSk = scan.nextInt();
 				}while(kritSk<1);
-				String[] kriteriji = new String[kritSk];
+				 kriteriji = new String[kritSk];
 				ievaditKriteriju(kriteriji);
-				int[] kriterijaSvars = new int[kritSk];
+				kriterijaSvars = new int[kritSk];
 				svars(kriterijaSvars,kritSk);
-				int[][] kriterijaVertejums = new int[studSk][kritSk];
+				kriterijaVertejums = new int[studSk][kritSk];
 				ievadaVertejumu(kriterijaVertejums,studenti,kriteriji);
-				double[] semestraVertejums = new double[studSk];
-				izrekinat(kriterijaVertejums,studenti,kriterijaSvars,semestraVertejums, kriteriji);
+				 semestraVertejums = new double[studSk];
+				izrekinat(kriterijaVertejums,studenti,kriterijaSvars,semestraVertejums,kriteriji);
 				break;
+			case 2:
+				izvadit(kriterijaVertejums,studenti,kriterijaSvars,semestraVertejums, kriteriji);
+				break;
+			case 3:
+				System.out.println("Programmas beigas!");
+				break;
+			default: System.out.println("Tāda darbība nepastāv!");	
 			}
-		}while(izvele!=7);
+		}while(izvele!=3);
 		scan.close();
 	}
 }
